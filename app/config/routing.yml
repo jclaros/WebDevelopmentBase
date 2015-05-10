@@ -1,0 +1,12 @@
+app:
+    type:         rest
+    prefix:       /api/v1
+    resource:     "AppBundle\Controller\DefaultController"
+    
+fos_user:
+    prefix:   /base
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /doc/api
