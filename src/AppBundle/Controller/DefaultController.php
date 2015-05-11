@@ -75,25 +75,29 @@ class DefaultController extends FOSRestController
 //      if(!$this->isGranted("ROLE_ADMIN")){
 //        return new \Symfony\Component\HttpFoundation\Response("Autenticación necesaria", 403);
 //      }
-      $content = json_decode($request->getContent());
-      if(empty($content)){
-        return new \Symfony\Component\HttpFoundation\Response("error with the data", 401);
+      $content = json_decode($request->getContent(), true);
+      if(empty($content) || !isset($content["title"]) || !isset($content["price"])){
+        return new \Symfony\Component\HttpFoundation\Response(json_encode(["error"=>"not enough parameters on the body, you need title and price"]), 401);
       }
+      $product = new \AppBundle\Entity\Product();
+      $product->setTitle($content["title"]);
+      $product->setPrice($content["price"]);
+      
       try {
-          
+          $em = $this->getDoctrine()->getManager();
+          $em->persist($product);
+          $em->flush();
+          return $this->handleView($this->view($product))->setStatusCode(201);
       } catch (Exception $exc) {
-          return new \Symfony\Component\HttpFoundation\Response("error with the data", 401);
+          return new \Symfony\Component\HttpFoundation\Response("resource not found", 404);
       }
-      
-      
-      return $this->handleView($this->view($movie))->setStatusCode(201);
     }
     
     /**
      * @ApiDoc(
      *   resource = true,
-     *   description = "Get one movie",
-     *   output = "Array",
+     *   description = "Get one product",
+     *   output = "Object",
      *   authentication = false,
      *   statusCodes = {
      *     200 = "Returned when successful",
@@ -105,10 +109,8 @@ class DefaultController extends FOSRestController
     public function getProductAction($id)
     { 
       try {
-        
         $movie = $this->getDoctrine()->getRepository("AppBundle:Product")->find($id);
-        return $this->handleView($this->view($movie));  
-          
+        return $movie;
       } catch (Exception $exc) {
           return new \Symfony\Component\HttpFoundation\Response("resource not found", 404);
       }
@@ -117,7 +119,7 @@ class DefaultController extends FOSRestController
     /**
      * @ApiDoc(
      *   resource = true,
-     *   description = "remove one movie",
+     *   description = "remove one product",
      *   authentication = false,
      *   statusCodes = {
      *     200 = "Returned when successful",
@@ -128,9 +130,22 @@ class DefaultController extends FOSRestController
      */
     public function deleteProductAction($id)
     { 
+      $product = $this->getDoctrine()->getManager()
+          ->getRepository('AppBundle:Product')
+          ->find($id);
+      
+      if(!$product){
+        throw $this->createNotFoundException(
+            'No product found for id '.$id
+        );
+      }
+      
+      $em = $this->getDoctrine()->getManager();
+      
       try {
-        
-          
+        $em->remove($product);
+        $em->flush();  
+        return new \Symfony\Component\HttpFoundation\Response(json_encode(["success"=>"product deleted"]), 200);
       } catch (Exception $exc) {
           return new \Symfony\Component\HttpFoundation\Response("resource not found", 404);
       }
@@ -154,26 +169,32 @@ class DefaultController extends FOSRestController
     public function putProductAction($id)
     { 
       
-      if(!$this->isGranted("ROLE_ADMIN")){
-        return new \Symfony\Component\HttpFoundation\Response("Autenticación necesaria", 403);
-      }
+//      if(!$this->isGranted("ROLE_ADMIN")){
+//        return new \Symfony\Component\HttpFoundation\Response("Autenticación necesaria", 403);
+//      }
       
       try {
         
-        $movie = $this->getDoctrine()->getRepository("AppBundle:Movie")->find($id);
-        if(!($movie instanceof \AppBundle\Entity\Movie)){
-          return new \Symfony\Component\HttpFoundation\Response("Resource not found", 404);
+        $product = $this->getDoctrine()->getRepository("AppBundle:Product")->find($id);
+        if(!$product){
+          throw $this->createNotFoundException(
+              'No product found for id '.$id
+          );
         }
         
+        $em = $this->getDoctrine()->getManager();
+        
         try {
-            $em = $this->getDoctrine()->getManager();
             
-            $content = json_decode($this->getRequest()->getContent());
-            $movie->setTitle($content->title);
-            $movie->setYear($content->year);
-            $movie->setBorrowed($content->borrowed);
             
-            $em->persist($movie);
+            $content = json_decode($this->getRequest()->getContent(), true);
+            if(isset($content["title"])){
+              $product->setTitle($content["title"]);
+            }
+            if(isset($content["price"])){
+              $product->setPrice($content["price"]);
+            }
+            
             $em->flush();
             
         } catch (Exception $exc) {
@@ -183,7 +204,7 @@ class DefaultController extends FOSRestController
           return new \Symfony\Component\HttpFoundation\Response("something got broken", 401);
       }
       
-      return $this->handleView($this->view($movie)); 
+      return $product; 
     }
     
 }
