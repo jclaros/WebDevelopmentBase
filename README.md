@@ -1,5 +1,5 @@
-# symfony2015StartUp
-symfony 2015 is a project created to show the basic configuration for rest handling with the latest bundles for symfony2
+# WebDevelopmentBase
+This is a project created to show the basic configuration for rest handling with the latest bundles for symfony2
 
 
 ___first clone the projects___
@@ -26,13 +26,12 @@ $ php app/check.php
 ```bash
 $ php app/console doctrine:schema:update --force
 ```
-5.- creation of the user:
+5.- load base data:
 ```bash
-$ php app/console fos:user:create
+$ php app/console doctrine:fixtures:load
 ```
 6.- cache clear
 ```bash
 $ sudo rm -Rf app/cache/* && sudo chmod -Rf 777 app/cache app/logs
 ```
 7.- open your code on the browser with the location of the virtualhost or port and enjoy
-
