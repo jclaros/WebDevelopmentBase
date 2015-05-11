@@ -6,13 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase
 {
-    protected $movieName;
-    protected $movieId;
-    public function __construct() {
-      $this->movieName = rand(10, 1200000);
-    }
-    
-    public function testGetMovies()
+    public function testGetProducts()
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/api/v1/products');
