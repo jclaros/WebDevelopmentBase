@@ -7,6 +7,18 @@ namespace AppBundle\Controller;
  *
  * @author Jonathan Claros <jclaros at lysoftbo.com>
  */
-class BaseController {
-  //put your code here
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+class BaseController extends Controller{
+  
+  /**
+     * @Route("/", name="initial")
+     */
+  public function homepageAction()
+    {
+        return $this->render(
+            'home.html.twig'
+        );
+    }
 }

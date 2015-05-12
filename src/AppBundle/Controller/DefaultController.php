@@ -31,10 +31,7 @@ class DefaultController extends FOSRestController
      */
     public function getProductsAction(Request $request)
     {
-//      if(!$this->isGranted("ROLE_ADMIN")){
-//        
-//      }
-      //$this->denyAccessUnlessGranted('ROLE_ADMIN');
+      
       $limit = $request->query->getInt('limit', 10);
       $page = $request->query->getInt('page', 1);
       $sorting = $request->query->get('sorting', array());
@@ -62,7 +59,7 @@ class DefaultController extends FOSRestController
      *   resource = true,
      *   description = "Create Movie",
      *   output = "Array",
-     *   authentication = true,
+     *   authentication = false,
      *   statusCodes = {
      *     200 = "Returned when successful",
      *     404 = "Returned when the page is not found"
@@ -109,8 +106,8 @@ class DefaultController extends FOSRestController
     public function getProductAction($id)
     { 
       try {
-        $movie = $this->getDoctrine()->getRepository("AppBundle:Product")->find($id);
-        return $movie;
+        $product = $this->getDoctrine()->getRepository("AppBundle:Product")->find($id);
+        return $product;
       } catch (Exception $exc) {
           return new \Symfony\Component\HttpFoundation\Response("resource not found", 404);
       }
@@ -156,7 +153,7 @@ class DefaultController extends FOSRestController
     /**
      * @ApiDoc(
      *   resource = true,
-     *   description = "Put movie",
+     *   description = "Put product",
      *   output = "Array",
      *   authentication = false,
      *   statusCodes = {

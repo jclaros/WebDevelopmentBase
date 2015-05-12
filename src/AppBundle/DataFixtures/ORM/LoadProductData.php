@@ -31,7 +31,6 @@ class LoadProductData implements FixtureInterface, OrderedFixtureInterface, Cont
         $manager->flush();
       }
     }
-      
   }
 
   public function setContainer(ContainerInterface $container = null) {
