@@ -35,3 +35,35 @@ $ php app/console doctrine:fixtures:load
 $ sudo rm -Rf app/cache/* && sudo chmod -Rf 777 app/cache app/logs
 ```
 7.- open your code on the browser with the location of the virtualhost or port and enjoy
+
+
+___Virtualhost windows:___
+
+    <VirtualHost *:80>
+        DocumentRoot "C:/xampp/yourproject/web"
+        <Directory "C:/xampp/yourproject/web">
+            AllowOverride All
+            Order Allow,Deny
+            Allow from All
+            <IfModule mod_rewrite.c>
+                RewriteEngine On
+                RewriteCond %{REQUEST_FILENAME} !-f
+                RewriteRule ^(.*)$ /app_dev.php [QSA,L]
+            </IfModule>
+        </Directory>
+    </VirtualHost>
+
+___Virtualhost linux___
+
+    <VirtualHost *:80>
+        ServerName domain.tld
+        ServerAlias www.domain.tld
+        DocumentRoot /var/www/project/web
+        <Directory /var/www/project/web>
+            AllowOverride All
+            Order Allow,Deny
+            Allow from All
+        </Directory>
+        ErrorLog /var/log/apache2/project_error.log
+        CustomLog /var/log/apache2/project_access.log combined
+    </VirtualHost>

@@ -20,7 +20,7 @@ class DefaultController extends FOSRestController
      * @REST\View()
      * @ApiDoc(
      *   resource = true,
-     *   description = "Gets list of products",
+     *   description = "Gets list of products, you can pass limit=>int, page=>int, sorting=>array, query=>string",
      *   output = "Array",
      *   authentication = false,
      *   statusCodes = {
@@ -35,12 +35,13 @@ class DefaultController extends FOSRestController
       $limit = $request->query->getInt('limit', 10);
       $page = $request->query->getInt('page', 1);
       $sorting = $request->query->get('sorting', array());
+      $query = $request->query->get('q', false);
       if(empty($sorting)){
         $sorting["id"] = "asc";
       }
       $productsPager = $this->getDoctrine()->getManager()
           ->getRepository('AppBundle:Product')
-          ->findAllPaginated($limit, $page, $sorting);
+          ->findAllPaginated($limit, $page, $sorting, $query);
 
       $pagerFactory = new PagerfantaFactory();
 

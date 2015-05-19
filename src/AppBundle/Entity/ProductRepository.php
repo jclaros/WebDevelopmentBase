@@ -14,10 +14,16 @@ use Pagerfanta\Pagerfanta;
  */
 class ProductRepository extends EntityRepository {
 
-  public function findAllPaginated($limit, $page, array $sorting = array()) {
+  public function findAllPaginated($limit, $page, array $sorting = array(), $q = false) {
     $fields = array_keys($this->getClassMetadata()->fieldMappings);
     $queryBuilder = $this->createQueryBuilder('p');
-
+    
+    if($q){
+      $queryBuilder->andWhere("p.title LIKE :parameter");
+      $queryBuilder->setParameter("parameter", "%".$q."%");
+    }
+    
+    
     foreach ($fields as $field) {
       if (isset($sorting[$field])) {
         $direction = ($sorting[$field] === 'asc') ? 'asc' : 'desc';
