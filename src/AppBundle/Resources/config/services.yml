@@ -10,3 +10,7 @@ services:
     appbundle.movie_service:
         class: AppBundle\Services\MovieService
         arguments: ["@doctrine.orm.entity_manager"]
+
+    appbundle.menu_service:
+            class: AppBundle\Services\MenuOpcionesService
+            arguments: ["@doctrine.orm.entity_manager"]

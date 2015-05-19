@@ -53,6 +53,41 @@ class DefaultController extends FOSRestController
           ))
       );
     }
+
+    /**
+     * @Rest\Get(name="_list", defaults={"_format" = "json"})
+     * @REST\View()
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Gets list of Menu opciones",
+     *   output = "Array",
+     *   authentication = false,
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *     404 = "Returned when the page is not found"
+     *   }
+     * )
+     */
+    public function getMenuOpcionesAction(Request $request)
+    {
+
+//        $limit = $request->query->getInt('limit', 10);
+//        $page = $request->query->getInt('page', 1);
+//        $sorting = $request->query->get('sorting', array());
+        if(empty($sorting)){
+            $sorting["id"] = "asc";
+        }
+        $serviceMenu = $this->get('appbundle.menu_service');
+        $menusOpciones = $serviceMenu->getAllMenuOptions();
+
+//        $productsPager = $this->getDoctrine()->getManager()
+//            ->getRepository('AppBundle:Product')
+//            ->findAllPaginated($limit, $page, $sorting);
+//
+//        $pagerFactory = new PagerfantaFactory();
+
+        return $menusOpciones;
+    }
     
     /**
      * @ApiDoc(
