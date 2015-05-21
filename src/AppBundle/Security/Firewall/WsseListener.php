@@ -56,7 +56,7 @@ class WsseListener implements ListenerInterface
             return;
         } catch (AuthenticationException $failed) {
             $failedMessage = 'WSSE Login failed for '.$token->getUsername().'. Why ? '.$failed->getMessage();
-            var_dump($failedMessage);
+            
             // ... you might log something here
 
             // To deny the authentication clear the token. This will redirect to the login page.
