@@ -54,13 +54,13 @@ class WsseProvider implements AuthenticationProviderInterface {
       throw new AuthenticationException("Back to the future...");
     }
 
-    // Expire timestamp after 5 minutes
-    if (time() - strtotime($created) > 3000) {
+    // Expire timestamp after 50 minutes
+    if (time() - strtotime($created) > 30000) {
       throw new AuthenticationException("Too late for this timestamp... Watch your watch.");
     }
 
-    // Validate nonce is unique within 5 minutes
-    if (file_exists($this->cacheDir . '/' . $nonce) && file_get_contents($this->cacheDir . '/' . $nonce) + 300 > time()) {
+    // Validate nonce is unique within 50 minutes
+    if (file_exists($this->cacheDir . '/' . $nonce) && file_get_contents($this->cacheDir . '/' . $nonce) + 30000 > time()) {
       //throw new NonceExpiredException('Previously used nonce detected');
     }
 

@@ -5,7 +5,7 @@ $secret = "admin";
 
 
 $password = "admin";
-$salt = 'b40445ilccg0gk0k08kgwg40w4wswc8';
+$salt = '1gaqsm718asgooowkcs00gogoc8k0ss';
 $salted = $password.'{'.$salt.'}';
 $digest = hash('sha512', $salted, true);
 
