@@ -31,37 +31,60 @@ class DefaultController extends FOSRestController {
    */
   public function getProductsAction(Request $request) {
 
-    
-    
-    
-      if(!$this->isGranted("ROLE_ADMIN")){
-        return new \Symfony\Component\HttpFoundation\Response("Autenticación necesaria", 403);
+    if(!$this->isGranted("ROLE_ADMIN")){
+        //return new \Symfony\Component\HttpFoundation\Response("Autenticación necesaria", 403);
       }
-    
-      
-      
-      
-    $limit = $request->query->getInt('limit', 10);
-    $page = $request->query->getInt('page', 1);
-    $sorting = $request->query->get('sorting', array());
-    $query = $request->query->get('q', false);
-    if (empty($sorting)) {
-      $sorting["id"] = "asc";
+
+      $productsPager = $this->getDoctrine()->getManager()
+          ->getRepository('AppBundle:Product')
+          ->findAllPaginated($limit, $page, $sorting, $query);
+
+      $pagerFactory = new PagerfantaFactory();
+
+      return $pagerFactory->createRepresentation(
+          $productsPager,
+          new Route('get_products_list', array(
+              'limit' => $limit,
+              'page' => $page,
+              'sorting' => $sorting
+          ))
+      );
     }
-    $productsPager = $this->getDoctrine()->getManager()
-            ->getRepository('AppBundle:Product')
-            ->findAllPaginated($limit, $page, $sorting, $query);
 
-    $pagerFactory = new PagerfantaFactory();
+    /**
+     * @Rest\Get(name="_list", defaults={"_format" = "json"})
+     * @REST\View()
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Gets list of Menu opciones",
+     *   output = "Array",
+     *   authentication = false,
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *     404 = "Returned when the page is not found"
+     *   }
+     * )
+     */
+    public function getMenuOpcionesAction(Request $request)
+    {
 
-    return $pagerFactory->createRepresentation(
-                    $productsPager, new Route('get_products_list', array(
-                'limit' => $limit,
-                'page' => $page,
-                'sorting' => $sorting
-                    ))
-    );
-  }
+//        $limit = $request->query->getInt('limit', 10);
+//        $page = $request->query->getInt('page', 1);
+//        $sorting = $request->query->get('sorting', array());
+        if(empty($sorting)){
+            $sorting["id"] = "asc";
+        }
+        $serviceMenu = $this->get('appbundle.menu_service');
+        $menusOpciones = $serviceMenu->getAllMenuOptions();
+
+//        $productsPager = $this->getDoctrine()->getManager()
+//            ->getRepository('AppBundle:Product')
+//            ->findAllPaginated($limit, $page, $sorting);
+//
+//        $pagerFactory = new PagerfantaFactory();
+
+        return $menusOpciones;
+    }
 
   /**
    * @ApiDoc(
