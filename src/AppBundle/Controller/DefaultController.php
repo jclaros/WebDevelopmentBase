@@ -35,20 +35,27 @@ class DefaultController extends FOSRestController {
         //return new \Symfony\Component\HttpFoundation\Response("Autenticación necesaria", 403);
       }
 
-      $productsPager = $this->getDoctrine()->getManager()
-          ->getRepository('AppBundle:Product')
-          ->findAllPaginated($limit, $page, $sorting, $query);
+    $limit = $request->query->getInt('limit', 10);
+    $page = $request->query->getInt('page', 1);
+    $sorting = $request->query->get('sorting', array());
+    $query = $request->query->get('q', false);
+    if(empty($sorting)){
+      $sorting["id"] = "asc";
+    }
+    $productsPager = $this->getDoctrine()->getManager()
+        ->getRepository('AppBundle:Product')
+        ->findAllPaginated($limit, $page, $sorting, $query);
 
-      $pagerFactory = new PagerfantaFactory();
+    $pagerFactory = new PagerfantaFactory();
 
-      return $pagerFactory->createRepresentation(
-          $productsPager,
-          new Route('get_products_list', array(
-              'limit' => $limit,
-              'page' => $page,
-              'sorting' => $sorting
-          ))
-      );
+    return $pagerFactory->createRepresentation(
+        $productsPager,
+        new Route('get_products_list', array(
+            'limit' => $limit,
+            'page' => $page,
+            'sorting' => $sorting
+        ))
+    );
     }
 
     /**
