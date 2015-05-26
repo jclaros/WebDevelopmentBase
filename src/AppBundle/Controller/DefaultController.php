@@ -31,8 +31,8 @@ class DefaultController extends FOSRestController {
    */
   public function getProductsAction(Request $request) {
 
-    if(!$this->isGranted("ROLE_ADMIN")){
-        return new \Symfony\Component\HttpFoundation\Response("Autenticación necesaria", 403);
+      if(!$this->isGranted("ROLE_ADMIN")){
+//        return new \Symfony\Component\HttpFoundation\Response("Autenticación necesaria", 403);
       }
 
     $limit = $request->query->getInt('limit', 10);
