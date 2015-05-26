@@ -3,12 +3,31 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
  * Product
  *
- * @ORM\Table(name="product")
- * @ORM\Entity
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\ProductRepository")
+ *
+ * @Serializer\XmlRoot("product")
+ *
+ * @Hateoas\Relation(
+ *    "self",
+ *    href = @Hateoas\Route(
+ *      "get_product",
+ *      parameters = { "id" = "expr(object.getId())"  }
+ *    )
+ * )
+ * @Hateoas\Relation(
+ *    "delete",
+ *    href = @Hateoas\Route(
+ *      "delete_product",
+ *      parameters = { "id" = "expr(object.getId())"  }
+ *    )
+ * )
  */
 class Product
 {
@@ -42,6 +61,66 @@ class Product
      * @ORM\Column(name="createdat", type="datetime", nullable=false)
      */
     private $createdat;
+
+    public function __construct(){
+        $this->createdat = new \DateTime();
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param string $price
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedat()
+    {
+        return $this->createdat;
+    }
+
+    /**
+     * @param \DateTime $createdat
+     */
+    public function setCreatedat($createdat)
+    {
+        $this->createdat = $createdat;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
 
 }

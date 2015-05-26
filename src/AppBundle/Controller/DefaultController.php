@@ -32,7 +32,7 @@ class DefaultController extends FOSRestController {
   public function getProductsAction(Request $request) {
 
     if(!$this->isGranted("ROLE_ADMIN")){
-        //return new \Symfony\Component\HttpFoundation\Response("Autenticación necesaria", 403);
+        return new \Symfony\Component\HttpFoundation\Response("Autenticación necesaria", 403);
       }
 
     $limit = $request->query->getInt('limit', 10);
@@ -74,21 +74,11 @@ class DefaultController extends FOSRestController {
      */
     public function getMenuOpcionesAction(Request $request)
     {
-
-//        $limit = $request->query->getInt('limit', 10);
-//        $page = $request->query->getInt('page', 1);
-//        $sorting = $request->query->get('sorting', array());
         if(empty($sorting)){
             $sorting["id"] = "asc";
         }
         $serviceMenu = $this->get('appbundle.menu_service');
-        $menusOpciones = $serviceMenu->getAllMenuOptions();
-
-//        $productsPager = $this->getDoctrine()->getManager()
-//            ->getRepository('AppBundle:Product')
-//            ->findAllPaginated($limit, $page, $sorting);
-//
-//        $pagerFactory = new PagerfantaFactory();
+        $menusOpciones = $serviceMenu->getAllMenuOptions($this->getUser());
 
         return $menusOpciones;
     }

@@ -8,6 +8,7 @@
 namespace AppBundle\Services;
 
 use AppBundle\Entity\MenuOpciones;
+use AppBundle\Entity\User;
 
 class MenuOpcionesService {
 
@@ -18,11 +19,10 @@ class MenuOpcionesService {
     }
 
 
-    public function getAllMenuOptions(){
+    public function getAllMenuOptions(User $user){
 
         try {
-            //$menuOps = $this->em->getRepository('AppBundle:Perfiles')->find(array('idPerfil' => 1)); // Podemos obtener datos de cualquier entidad mediante sus atributos de clase que hayan sido mapeados a la BD
-            $menuOps = $this->em->getRepository('AppBundle:MenuOpciones')->findAll();
+            $menuOps = $user->getPerfil();
         } catch (Exception $exc) {
             throw new Exception("Error almacenando la información");
         }

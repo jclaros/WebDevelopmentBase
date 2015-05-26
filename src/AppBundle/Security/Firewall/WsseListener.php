@@ -47,8 +47,7 @@ class WsseListener implements ListenerInterface
         try {
             /* @var $authToken AppBundle\Security\Authentication\Token\WsseUserToken */
             $authToken = $this->authenticationManager->authenticate($token);
-//            var_dump($authToken->getUser()->getSalt());
-//die();
+
             
             
             $this->tokenStorage->setToken($authToken);

@@ -31,7 +31,12 @@ class User extends BaseUser{
      * )
      */
     protected $groups;
-    
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Perfiles")
+     * @ORM\JoinColumn(name="id_perfil", referencedColumnName="id_perfil", nullable=true)
+     */
+    private $perfil;
 
     public function __construct()
     {
@@ -40,5 +45,21 @@ class User extends BaseUser{
         
         
         // your own logic
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPerfil()
+    {
+        return $this->perfil;
+    }
+
+    /**
+     * @param mixed $perfil
+     */
+    public function setPerfil($perfil)
+    {
+        $this->perfil = $perfil;
     }
 }

@@ -1,11 +1,9 @@
 <?php 
 
-$username = "admin";
-$secret = "admin";
+$username = "demo";
+$password = "demo";
+$salt = '443qurd4va0wsgw8c4wc4occkgwswsk';
 
-
-$password = "admin";
-$salt = '1gaqsm718asgooowkcs00gogoc8k0ss';
 $salted = $password.'{'.$salt.'}';
 $digest = hash('sha512', $salted, true);
 
@@ -23,7 +21,7 @@ $created = date("Y-m-d\TH:i:s.uP");
 
 $passwordDigest = base64_encode(sha1(base64_decode($nonce) . $created . $encodedPassword , true));
 
-echo('UsernameToken Username="'.$username.'", PasswordDigest="'.$passwordDigest.'", Nonce="'.$nonce.'", Created="'.$created.'"');
+echo('UsernameToken Username="'.$username.'", PasswordDigest="'.$passwordDigest.'", Nonce="'.$nonce.'", Created="'.$created.'"'.PHP_EOL);
 
 
 

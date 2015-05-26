@@ -104,4 +104,148 @@ class MenuOpciones
         $this->idPerfil = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    /**
+     * @return string
+     */
+    public function getOpcion()
+    {
+        return $this->opcion;
+    }
+
+    /**
+     * @param string $opcion
+     */
+    public function setOpcion($opcion)
+    {
+        $this->opcion = $opcion;
+    }
+
+    /**
+     * @return string
+     */
+    public function getControlador()
+    {
+        return $this->controlador;
+    }
+
+    /**
+     * @param string $controlador
+     */
+    public function setControlador($controlador)
+    {
+        $this->controlador = $controlador;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTooltip()
+    {
+        return $this->tooltip;
+    }
+
+    /**
+     * @param string $tooltip
+     */
+    public function setTooltip($tooltip)
+    {
+        $this->tooltip = $tooltip;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIcono()
+    {
+        return $this->icono;
+    }
+
+    /**
+     * @param string $icono
+     */
+    public function setIcono($icono)
+    {
+        $this->icono = $icono;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEstado()
+    {
+        return $this->estado;
+    }
+
+    /**
+     * @param string $estado
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrden()
+    {
+        return $this->orden;
+    }
+
+    /**
+     * @param int $orden
+     */
+    public function setOrden($orden)
+    {
+        $this->orden = $orden;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreacion()
+    {
+        return $this->creacion;
+    }
+
+    /**
+     * @param string $creacion
+     */
+    public function setCreacion($creacion)
+    {
+        $this->creacion = $creacion;
+    }
+
+    /**
+     * @return \MenuOpciones
+     */
+    public function getIdPadre()
+    {
+        return $this->idPadre;
+    }
+
+    /**
+     * @param \MenuOpciones $idPadre
+     */
+    public function setIdPadre($idPadre)
+    {
+        $this->idPadre = $idPadre;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIdPerfil()
+    {
+        return $this->idPerfil;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\Collection $idPerfil
+     */
+    public function setIdPerfil($idPerfil)
+    {
+        $this->idPerfil = $idPerfil;
+    }
+
 }
