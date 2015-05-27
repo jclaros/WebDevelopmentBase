@@ -59,11 +59,11 @@ class DefaultController extends FOSRestController {
     }
 
     /**
-     * @Rest\Get(name="_list", defaults={"_format" = "json"})
+     * @Rest\Get(name="menu", defaults={"_format" = "json"})
      * @REST\View()
      * @ApiDoc(
      *   resource = true,
-     *   description = "Gets list of Menu opciones",
+     *   description = "Example of function",
      *   output = "Array",
      *   authentication = false,
      *   statusCodes = {
@@ -72,16 +72,49 @@ class DefaultController extends FOSRestController {
      *   }
      * )
      */
-    public function getMenuOpcionesAction(Request $request)
+    public function getMenuAction(Request $request)
     {
-        if(empty($sorting)){
-            $sorting["id"] = "asc";
-        }
-        $serviceMenu = $this->get('appbundle.menu_service');
-        $menusOpciones = $serviceMenu->getAllMenuOptions($this->getUser());
+        $em = $this->getDoctrine()->getEntityManager();
+        $conection = $em->getConnection();
+        $st = $conection->prepare("SELECT f_abm_menu_opciones(:p_opc::VARCHAR,19,13,:p_opcion::VARCHAR,:p_controlador::VARCHAR,:p_tooltip::VARCHAR,'',1);");
+        $st->bindValue(":p_opc", "A");
+        $st->bindValue(":p_opcion", "Administracion roles");
+        $st->bindValue(":p_controlador", "/admin/roles");
+        $st->bindValue(":p_tooltip", "Administracion roles");
 
-        return $menusOpciones;
+        $st->execute();
+        $response = $st->fetchAll();
+        return $this->handleView($this->view(array("response"=>"success", "sadas"=>"asdasdas", "asdas"=>array("asdas"=>"asdasdas"))))->setStatusCode(200);
+//      return new \Symfony\Component\HttpFoundation\Response(json_encode()), 202);
+
     }
+
+
+  /**
+   * @Rest\Get(name="_list", defaults={"_format" = "json"})
+   * @REST\View()
+   * @ApiDoc(
+   *   resource = true,
+   *   description = "Gets list of Menu opciones",
+   *   output = "Array",
+   *   authentication = false,
+   *   statusCodes = {
+   *     200 = "Returned when successful",
+   *     404 = "Returned when the page is not found"
+   *   }
+   * )
+   */
+  public function getMenuOpcionesAction(Request $request)
+  {
+    if(empty($sorting)){
+      $sorting["id"] = "asc";
+    }
+    $serviceMenu = $this->get('appbundle.menu_service');
+    $menusOpciones = $serviceMenu->getAllMenuOptions($this->getUser());
+
+    return $menusOpciones;
+  }
+
 
   /**
    * @ApiDoc(

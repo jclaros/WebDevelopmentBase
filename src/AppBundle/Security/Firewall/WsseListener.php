@@ -8,6 +8,8 @@
 
 namespace AppBundle\Security\Firewall;
 
+use Doctrine\DBAL\Connection;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
@@ -18,6 +20,10 @@ use AppBundle\Security\Authentication\Token\WsseUserToken;
 
 class WsseListener implements ListenerInterface
 {
+    /**
+     * @var $container Container
+     */
+    protected $container;
     protected $tokenStorage;
     protected $authenticationManager;
 
@@ -47,10 +53,28 @@ class WsseListener implements ListenerInterface
         try {
             /* @var $authToken AppBundle\Security\Authentication\Token\WsseUserToken */
             $authToken = $this->authenticationManager->authenticate($token);
-
-            
-            
             $this->tokenStorage->setToken($authToken);
+
+            /**
+             * @var $coneccion Connection
+             */
+            $coneccion = $this->container->get("database_connection");
+            $coneccion->close();
+
+
+            $refCon = new \ReflectionObject($coneccion);
+
+            $refParams = $refCon->getProperty("_params");
+            $refParams->setAccessible("public");
+
+            $params = $refParams->getValue($coneccion);
+            $params["dbname"] = "base";
+            $params["user"] = $matches[1];
+
+            $refParams->setAccessible("private");
+            $refParams->setValue($coneccion, $params);
+
+            $this->container->get("doctrine")->resetEntityManager("default");
 
             return;
         } catch (AuthenticationException $failed) {
@@ -71,5 +95,9 @@ class WsseListener implements ListenerInterface
         $response = new Response();
         $response->setStatusCode(Response::HTTP_FORBIDDEN);
         $event->setResponse($response);
+    }
+
+    public function setContainer(Container $container = null){
+        $this->container = $container;
     }
 }

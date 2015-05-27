@@ -1,8 +1,8 @@
 <?php 
 
-$username = "demo";
-$password = "demo";
-$salt = '443qurd4va0wsgw8c4wc4occkgwswsk';
+$username = "admin";
+$password = "admin";
+$salt = '51tblsn9n0wscc48wk84swco8kkscg';
 
 $salted = $password.'{'.$salt.'}';
 $digest = hash('sha512', $salted, true);

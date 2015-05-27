@@ -6,6 +6,8 @@ services:
     wsse.security.authentication.listener:
         class: AppBundle\Security\Firewall\WsseListener
         arguments: ["@security.token_storage", "@security.authentication.manager"]
+        calls:
+            - [ setContainer,[@service_container] ]
         
     appbundle.movie_service:
         class: AppBundle\Services\MovieService
