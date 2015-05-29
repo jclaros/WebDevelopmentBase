@@ -196,6 +196,27 @@ class DefaultController extends FOSRestController {
     }
   }
 
+/**
+   * @ApiDoc(
+   *   resource = true,
+   *   description = "check connection",
+   *   authentication = true,
+   *   statusCodes = {
+   *     200 = "Returned when successful",
+   *     404 = "Returned when the page is not found"
+   *   }
+   * )
+   * 
+   */
+  public function getCheckAction() {
+    if($this->isGranted("ROLE_USER")){
+        return new \Symfony\Component\HttpFoundation\Response(json_encode(["success" => "product deleted"]), 200);
+    }else{
+      return new \Symfony\Component\HttpFoundation\Response(json_encode(["error" => "not authenticated"]), 403);
+    }
+  }
+
+
   /**
    * @ApiDoc(
    *   resource = true,
