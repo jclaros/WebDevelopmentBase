@@ -210,7 +210,7 @@ class DefaultController extends FOSRestController {
    */
   public function getCheckAction() {
     if($this->isGranted("ROLE_USER")){
-        return new \Symfony\Component\HttpFoundation\Response(json_encode(["success" => "product deleted"]), 200);
+        return new \Symfony\Component\HttpFoundation\Response(json_encode(["success" => "authenticated"]), 200);
     }else{
       return new \Symfony\Component\HttpFoundation\Response(json_encode(["error" => "not authenticated"]), 403);
     }
