@@ -2,7 +2,7 @@
 namespace AppBundle\Services;
 /**
  * Description of MovieService
- *
+ * Custom service to handle movies construction
  * @author Jonathan Claros <jclaros at lysoftbo.com>
  */
 use AppBundle\Entity\Movie;

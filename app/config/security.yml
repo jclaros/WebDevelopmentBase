@@ -1,3 +1,5 @@
+# security configuration to handle the definition of the encoders, groups, user providers and firewalls which are
+# going to be called in the route match process
 security:
     encoders:
         FOS\UserBundle\Model\UserInterface: sha512

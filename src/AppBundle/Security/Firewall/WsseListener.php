@@ -2,7 +2,9 @@
 
 /**
  * Description of WsseListener
- *
+ * Custom listener which is being attached by the WsseFactory it receives the call from a pre_auth chain
+ * and continues with the behavior in order to authenticate or not a user (we perform the change of
+ * the database connection here)
  * @author Jonathan Claros <jclaros at lysoftbo.com>
  */
 

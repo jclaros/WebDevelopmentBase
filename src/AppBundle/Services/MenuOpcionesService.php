@@ -1,5 +1,6 @@
 <?php
 /**
+ * Custom service to handle Menu de opciones retrieval
  * Created by IntelliJ IDEA.
  * User: amed
  * Date: 5/18/15

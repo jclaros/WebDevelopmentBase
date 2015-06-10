@@ -2,6 +2,8 @@
 namespace AppBundle\DataFixtures\ORM;
 /**
  * Description of LoadProductData
+ * Basic Load product class, which is used in order to populate data on dev environments or seed information on
+ * first production deploy.
  *
  * @author Jonathan Claros
  */
@@ -38,7 +40,7 @@ class LoadProductData implements FixtureInterface, OrderedFixtureInterface, Cont
   }
 
   /**
-   * {@inheritDoc}
+   * this sets the appropriate order for the fixture to be loaded
    */
   public function getOrder()
   {

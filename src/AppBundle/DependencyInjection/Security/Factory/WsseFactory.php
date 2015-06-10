@@ -13,6 +13,11 @@ use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\SecurityFactoryInterface;
 
+/**
+ * Class WsseFactory
+ * @package AppBundle\DependencyInjection\Security\Factory
+ * Responsible to attach the providers of the wsse and the lister to the chain of calls on pre_auth
+ */
 class WsseFactory implements SecurityFactoryInterface
 {
     public function create(ContainerBuilder $container, $id, $config, $userProvider, $defaultEntryPoint)

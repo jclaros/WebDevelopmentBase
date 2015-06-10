@@ -1,3 +1,4 @@
+# main config part of the framework the most heavy config part is placed here
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }

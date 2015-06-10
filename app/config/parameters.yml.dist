@@ -1,4 +1,5 @@
 # This file is a "template" of what your parameters.yml file should look like
+# basic parameters used on the configuration part of the system
 parameters:
     database_driver:   pdo_pgsql
     database_host:     127.0.0.1

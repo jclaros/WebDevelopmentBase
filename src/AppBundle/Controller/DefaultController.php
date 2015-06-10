@@ -13,9 +13,17 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class DefaultController
+ * @package AppBundle\Controller
+ *
+ * This controller is the responsible for all rest interaction so far, it handles various calls like products crud and listing
+ * this controller also handles a token creation
+ */
 class DefaultController extends FOSRestController {
 
   /**
+   * This method handles the api call to return a list of products with the appropriate pagination
    * @Rest\Get(name="_list", defaults={"_format" = "json"})
    * @REST\View()
    * @ApiDoc(
@@ -59,6 +67,7 @@ class DefaultController extends FOSRestController {
     }
 
     /**
+     * This method handles the menu requests via database function
      * @Rest\Get(name="menu", defaults={"_format" = "json"})
      * @REST\View()
      * @ApiDoc(
@@ -91,6 +100,7 @@ class DefaultController extends FOSRestController {
 
 
   /**
+   * This method handles the menu action list sending in order to show the appropriate menu in the frontend area
    * @Rest\Get(name="_list", defaults={"_format" = "json"})
    * @REST\View()
    * @ApiDoc(
@@ -117,6 +127,7 @@ class DefaultController extends FOSRestController {
 
 
   /**
+   * This method handles the create action for products
    * @ApiDoc(
    *   resource = true,
    *   description = "Create Movie",
@@ -152,6 +163,7 @@ class DefaultController extends FOSRestController {
   }
 
   /**
+   * This method handles the token generation part of the login interaction
    * @ApiDoc(
    *   resource = true,
    *   description = "Create Token",
@@ -196,7 +208,8 @@ class DefaultController extends FOSRestController {
     }
   }
 
-/**
+  /**
+   * This method is a basic method to be called in order to ping if the connection is a valid one and the user is logged
    * @ApiDoc(
    *   resource = true,
    *   description = "check connection",
@@ -218,6 +231,7 @@ class DefaultController extends FOSRestController {
 
 
   /**
+   * This method handles the request of a single product
    * @ApiDoc(
    *   resource = true,
    *   description = "Get one product",
@@ -240,6 +254,7 @@ class DefaultController extends FOSRestController {
   }
 
   /**
+   * This method handles the delete action of the product
    * @ApiDoc(
    *   resource = true,
    *   description = "remove one product",
@@ -274,6 +289,7 @@ class DefaultController extends FOSRestController {
   }
 
   /**
+   * This method handles the update of a single product
    * @ApiDoc(
    *   resource = true,
    *   description = "Put product",

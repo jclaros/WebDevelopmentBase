@@ -2,6 +2,8 @@
 
 /**
  * Description of WsseProvider
+ * WsseProvider is the responsible for authenticate a defined object called token, it starts with authenticate
+ * and concludes with validateDigest
  *
  * @author Jonathan Claros <jclaros at lysoftbo.com>
  */

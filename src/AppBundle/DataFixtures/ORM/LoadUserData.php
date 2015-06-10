@@ -2,7 +2,9 @@
 namespace AppBundle\DataFixtures\ORM;
 /**
  * Description of LoadBaseUsers
- *
+ * Basic class which is used to load and populate user data with fos userbundle interaction is used in order to
+ * populate data on dev environments or seed information on
+ * first production deploy.
  * @author Jonathan Claros
  */
 use AppBundle\Entity\MenuOpciones;
@@ -123,7 +125,7 @@ class LoadUserData implements FixtureInterface, OrderedFixtureInterface, Contain
   }
 
   /**
-   * {@inheritDoc}
+   * this sets the appropriate order for the fixture to be loaded
    */
   public function getOrder()
   {

@@ -2,7 +2,7 @@
 
 /**
  * Description of WsseUserToken
- *
+ * Commodity class to store the token implementing AbstractToken class
  * @author Jonathan Claros <jclaros at lysoftbo.com>
  */
 namespace AppBundle\Security\Authentication\Token;

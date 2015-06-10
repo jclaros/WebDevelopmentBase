@@ -10,6 +10,7 @@ use AppBundle\Entity\Group as Group;
 /**
  * Description of User
  *
+ * Extension of the BaseUser class which is defined by FOSUserBundle
  * @author Jonathan Claros <jclaros at lysoftbo.com>
  * @ORM\Entity
  * @ORM\Table(name="fos_user")

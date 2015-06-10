@@ -1,3 +1,5 @@
+# services definition for this particular bundle
+
 services:
     wsse.security.authentication.provider:
         class: AppBundle\Security\Authentication\Provider\WsseProvider

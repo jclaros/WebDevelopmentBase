@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Description of Group
  *
+ * Extension of the BaseGroup class which is defined by FOSUserBundle
+ *
  * @author Jonathan Claros <jclaros at lysoftbo.com>
  * @ORM\Entity
  * @ORM\Table(name="fos_group")
